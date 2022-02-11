@@ -7,10 +7,8 @@ Original file is located at
     https://colab.research.google.com/drive/1hCiQ_RP5ynw-xmhsY4ZomPhRNaECPK3W
 """
 
-# install lime
 pip install lime
 
-# install FLAML auto ML
 pip install flaml
 
 # mount my google drive to this notebook so I can access my files
