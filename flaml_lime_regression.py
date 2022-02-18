@@ -39,9 +39,9 @@ X_train, X_test, y_train, y_test = train_test_split(train_data, train_labels, te
 # flaml to find the best regression classifier
 from flaml import AutoML
 automl = AutoML()
-automl_settings = {"task": 'regression'}
-automl.fit(X_train, y_train, **automl_settings)
-prediction = automl.predict(X_test)
+automl_settings = {"task": 'regression', 'time_budget' : 120}
+automl.fit(X_train.values, y_train.values, **automl_settings)
+prediction = automl.predict(X_test.values)
 
 # CLASS FUNCTION FOR REGRESSION
 # allows us to easily use FLAML and LIME together for regression problems
@@ -49,20 +49,20 @@ prediction = automl.predict(X_test)
 class flaml_lime_regression:
 
   # initializes variables
-  def __init__(self, ml_classifier, train_data, test_data):
+  def __init__(self, ml_classifier, train_data, test_data, test_labels):
     self.ml_classifier = ml_classifier
     self.train_data = train_data
     self.test_data = test_data
+    self.test_labels = test_labels
 
   # creates the LIME explainer
-  def flaml_lime_explainer(self, class_names, **kwargs):
+  def flaml_lime_explainer(self, **kwargs):
 
     import lime
     from lime import lime_tabular
     explainer = lime_tabular.LimeTabularExplainer(
       training_data=np.array(self.train_data),
       feature_names = self.train_data.columns,
-      class_names= class_names,
       mode='regression',
       **kwargs
     )
@@ -73,6 +73,7 @@ class flaml_lime_regression:
 
     import lime
     from lime import lime_tabular
+    print("True Label: {}\n".format(self.test_labels.values[row_index]))
     explainer = explainer
 
     exp = explainer.explain_instance(data_row=self.test_data.values[row_index], predict_fn=self.ml_classifier.predict, **kwargs)
@@ -82,7 +83,7 @@ class flaml_lime_regression:
 # calls our class object and its functions to make sure they work correctly
 # shows that we were able to create a compatible and easy-to-use LIME and FLAML interaction function
 
-flaml_lime_regress = flaml_lime_regression(ml_classifier = automl, train_data = X_train, test_data = X_test)
+flaml_lime_regress = flaml_lime_regression(ml_classifier = automl, train_data = X_train, test_data = X_test, test_labels = y_test)
 
 explainer = flaml_lime_regress.flaml_lime_explainer(class_names = ['battery_power'])
-flaml_lime_regress.flaml_lime_show(explainer, row_index = 14)
+flaml_lime_regress.flaml_lime_show(explainer, row_index = 1)
