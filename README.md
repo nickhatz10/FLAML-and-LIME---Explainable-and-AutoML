@@ -1,2 +1,2 @@
 # FLAML-and-LIME---Explainable-and-AutoML
-Our research project allows users to implement the AutoML library FLAML, and then output easy-to-understand visualizations which explain the predictions of FLAML (AutoML). This repository contains the source code for the code we developed that allows for a compatible interaction between FLAML and LIME for various ML problems, such as classification and regression.
+Our research project allows users to implement the AutoML library FLAML, and then output easy-to-understand visualizations which explain the predictions of FLAML (AutoML). This repository contains the source code we developed that allows for a compatible interaction between FLAML-LIME and FLAML-SHAP for various ML problems, such as classification and regression.
