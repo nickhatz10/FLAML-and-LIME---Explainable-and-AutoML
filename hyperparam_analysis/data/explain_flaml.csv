@@ -1,0 +1,5 @@
+﻿run,task,learner,model,mse
+1,classification,lgbm,lgbmregressor,0.000183
+2,classification,lgbm,lgbmregressor,0.0014
+3,regression,lgbmregressor,extratreesregressor,0.0059
+4,regression,extratreesregressor,xgbregressor,0.0506
